@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://c2b3u56psi2lc"]
+
+[ext_resource type="Script" path="res://Scripts/CelestialBody.cs" id="1_ei6no"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_dqctn"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ntbia"]
+emission_enabled = true
+emission = Color(1, 0.85098, 0.0823529, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_yst2m"]
+material = SubResource("StandardMaterial3D_ntbia")
+
+[node name="Star" type="RigidBody3D"]
+mass = 1e+09
+script = ExtResource("1_ei6no")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, 0, 0, 0)
+shape = SubResource("SphereShape3D_dqctn")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CollisionShape3D"]
+mesh = SubResource("SphereMesh_yst2m")

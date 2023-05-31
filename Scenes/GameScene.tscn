@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://olhbvqabp1qa"]
+
+[ext_resource type="PackedScene" uid="uid://ccbeuyn13xa0w" path="res://Scenes/PlanetarySystem.tscn" id="1_rri56"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_rvo3w"]
+sky_top_color = Color(0.00392157, 0, 0.152941, 1)
+sky_horizon_color = Color(0.50098, 0.5, 0.558823, 1)
+sky_energy_multiplier = 0.0
+ground_bottom_color = Color(0, 0, 0.0823529, 1)
+ground_horizon_color = Color(0.50098, 0.5, 0.558823, 1)
+
+[sub_resource type="Sky" id="Sky_2yhe2"]
+sky_material = SubResource("ProceduralSkyMaterial_rvo3w")
+
+[sub_resource type="Environment" id="Environment_144wq"]
+background_mode = 2
+sky = SubResource("Sky_2yhe2")
+tonemap_mode = 2
+glow_enabled = true
+
+[node name="GameScene" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.944949, -0.283379, 0.163609, 0, 0.5, 0.866025, -0.327218, 0.81835, -0.472474, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_144wq")
+
+[node name="PlanetarySystem" parent="." instance=ExtResource("1_rri56")]

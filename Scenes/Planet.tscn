@@ -1,0 +1,34 @@
+[gd_scene load_steps=5 format=3 uid="uid://uvm6s8pv56ye"]
+
+[ext_resource type="Script" path="res://Scripts/CelestialBody.cs" id="1_pumtt"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_hcimr"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_rqbne"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_m5gkn"]
+
+[node name="Planet" type="RigidBody3D"]
+mass = 1e+07
+script = ExtResource("1_pumtt")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(80, 0, 0, 0, 80, 0, 0, 0, 80, 0, 0, 0)
+shape = SubResource("SphereShape3D_hcimr")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CollisionShape3D"]
+mesh = SubResource("SphereMesh_rqbne")
+skeleton = NodePath("../..")
+
+[node name="Area3D" type="Area3D" parent="."]
+gravity_space_override = 3
+gravity_point = true
+gravity_point_center = Vector3(0, 0, 0)
+gravity_direction = Vector3(0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(120, 0, 0, 0, 120, 0, 0, 0, 120, 0, 0, 0)
+shape = SubResource("SphereShape3D_m5gkn")
+
+[connection signal="body_entered" from="Area3D" to="." method="_OnAreaBodyEntered"]
+[connection signal="body_exited" from="Area3D" to="." method="_OnAreaBodyExited"]

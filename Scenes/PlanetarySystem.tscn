@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://ccbeuyn13xa0w"]
+
+[ext_resource type="Script" path="res://Scripts/PlanetarySystem.cs" id="1_j60f3"]
+[ext_resource type="PackedScene" uid="uid://c2b3u56psi2lc" path="res://Scenes/Star.tscn" id="1_qjsc3"]
+[ext_resource type="PackedScene" uid="uid://uvm6s8pv56ye" path="res://Scenes/Planet.tscn" id="2_6cap7"]
+
+[node name="PlanetarySystem" type="Node3D"]
+script = ExtResource("1_j60f3")
+
+[node name="Star" parent="." instance=ExtResource("1_qjsc3")]
+
+[node name="Planet" parent="." instance=ExtResource("2_6cap7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2085.65, 0, 0)
+mass = 100.0
+initialVelocity = Vector3(0, 0, 250)
