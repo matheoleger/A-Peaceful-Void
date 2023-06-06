@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://ccbeuyn13xa0w"]
+[gd_scene load_steps=5 format=3 uid="uid://ccbeuyn13xa0w"]
 
 [ext_resource type="Script" path="res://Scripts/PlanetarySystem.cs" id="1_j60f3"]
 [ext_resource type="PackedScene" uid="uid://c2b3u56psi2lc" path="res://Scenes/Star.tscn" id="1_qjsc3"]
 [ext_resource type="PackedScene" uid="uid://uvm6s8pv56ye" path="res://Scenes/Planet.tscn" id="2_6cap7"]
+[ext_resource type="PackedScene" uid="uid://dgmnf6cjb8o5o" path="res://Scenes/PlayerRigidBody.tscn" id="4_00no6"]
 
 [node name="PlanetarySystem" type="Node3D"]
 script = ExtResource("1_j60f3")
@@ -10,6 +11,14 @@ script = ExtResource("1_j60f3")
 [node name="Star" parent="." instance=ExtResource("1_qjsc3")]
 
 [node name="Planet" parent="." instance=ExtResource("2_6cap7")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2085.65, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5792.36, 0, 0)
+initialVelocity = Vector3(0, 0, 100)
+
+[node name="PlayerRigidBody" parent="Planet" instance=ExtResource("4_00no6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.29102, 25.7823, 39.5503)
+mass = 1000.0
+
+[node name="Planet2" parent="." instance=ExtResource("2_6cap7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3172.21, 0, 0)
 mass = 100.0
-initialVelocity = Vector3(0, 0, 250)
+initialVelocity = Vector3(0, 0, 150)

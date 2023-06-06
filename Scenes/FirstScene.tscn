@@ -1,6 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://onuxjrdgi46v"]
+[gd_scene load_steps=9 format=3 uid="uid://onuxjrdgi46v"]
 
-[ext_resource type="PackedScene" uid="uid://cnrdbsruitr7u" path="res://Scenes/Player.tscn" id="1_2cmnl"]
+[ext_resource type="PackedScene" uid="uid://dgmnf6cjb8o5o" path="res://Scenes/PlayerRigidBody.tscn" id="2_sto8l"]
 [ext_resource type="PackedScene" uid="uid://uvm6s8pv56ye" path="res://Scenes/Planet.tscn" id="2_wv6km"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_uq6uw"]
@@ -18,6 +18,10 @@ glow_enabled = true
 
 [sub_resource type="BoxMesh" id="BoxMesh_ucbmv"]
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_rgu7i"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_bjo4y"]
+
 [node name="Node3D" type="Node3D"]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
@@ -31,11 +35,26 @@ environment = SubResource("Environment_bja13")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 41.7549, 5.94934)
 mesh = SubResource("BoxMesh_ucbmv")
 
-[node name="Player" parent="." instance=ExtResource("1_2cmnl")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 54, 0)
-floor_max_angle = 3.14159
+[node name="PlayerRigidBody" parent="." instance=ExtResource("2_sto8l")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 42.8305, 0)
 
 [node name="Planet" parent="." instance=ExtResource("2_wv6km")]
 
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Planet"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 39.4495, -7.89202)
+mesh = SubResource("BoxMesh_ucbmv")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -145.535)
+visible = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, 0, 0, 0)
+shape = SubResource("SphereShape3D_rgu7i")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D/CollisionShape3D"]
+mesh = SubResource("SphereMesh_bjo4y")
+
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -1.42876, 91.3152, 0.309465)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 71, 0)

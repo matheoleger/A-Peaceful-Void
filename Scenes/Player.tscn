@@ -7,6 +7,11 @@
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_1ie6j"]
 
 [node name="Player" type="CharacterBody3D"]
+slide_on_ceiling = false
+wall_min_slide_angle = 3.14159
+floor_stop_on_slope = false
+floor_block_on_wall = false
+floor_max_angle = 3.14159
 script = ExtResource("1_frt35")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]

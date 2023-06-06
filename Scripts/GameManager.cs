@@ -10,7 +10,7 @@ public partial class GameManager : Node
 
 	#endregion
 
-	public Player player;
+	public PlayerRigidBody player;
 
 	public List<CelestialBody> celestialBodies = new List<CelestialBody>();
 

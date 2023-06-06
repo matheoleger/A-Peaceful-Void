@@ -14,12 +14,17 @@ public partial class Player : CharacterBody3D
 	private Node3D neck;
 	private Camera3D camera;
 
+	private StaticBody3D planet;
+
 	public override void _Ready()
 	{
 		neck = GetNode<Node3D>("Neck");
 		camera = GetNode<Camera3D>("Neck/Camera3D"); 
+		planet = GetNode<StaticBody3D>("../StaticBody3D");
+
+		GD.Print(planet);
 	
-		GameManager.instance.player = this;
+		// GameManager.instance.player = this;
 	}
 
 	public override void _UnhandledInput(InputEvent inputEvent)
@@ -59,14 +64,14 @@ public partial class Player : CharacterBody3D
 
 	private void SetGravityDirection()
 	{
+		// gravityDirection = (Vector3.Zero - this.GlobalTransform.Origin).Normalized();
 		gravityDirection = (GameManager.instance.currentPlayerCelestialBody.GlobalTransform.Origin - GlobalTransform.Origin).Normalized();
-		GD.Print((GameManager.instance.currentPlayerCelestialBody.GlobalTransform.Origin - GlobalTransform.Origin));
+		// gravityDirection = (planet.GlobalTransform.Origin - GlobalTransform.Origin).Normalized();
+		// GD.Print((GameManager.instance.currentPlayerCelestialBody.GlobalTransform.Origin - GlobalTransform.Origin));
 	}
 
 	public override void _PhysicsProcess(double delta)
 	{
-		Vector3 velocity = Velocity;
-
 		SetGravityDirection();
 
 		// Rotate player according to gravity direction
@@ -79,12 +84,23 @@ public partial class Player : CharacterBody3D
 		// Redefine floorMaxAngle for planets
 		// this.FloorMaxAngle = 180;
 
-		// Add the gravity.
-		if (!IsOnFloor()) {
-			velocity.Y -= GameManager.instance.currentPlayerCelestialBody.gravityForce * (float)delta;
-			// GD.Print("IM NOT ON THE FLOOR, OMG");
-		}
+		// // Add the gravity.
+		// if (!IsOnFloor()) {
+		// 	velocity.Y -= GameManager.instance.currentPlayerCelestialBody.gravityForce * (float)delta;
+		// 	// GD.Print("IM NOT ON THE FLOOR, OMG");
+		// }
 
+		// Vector3 gravityForceLocal = gravityDirection*GameManager.instance.currentPlayerCelestialBody.gravityForce*GlobalTransform.Basis.Transposed();
+		// Vector3 gravityForceLocal = gravityDirection*GameManager.instance.currentPlayerCelestialBody.gravityForce*GlobalTransform.Basis;
+
+		Vector3 velocity = Velocity;
+
+		// velocity += gravityDirection*GameManager.instance.currentPlayerCelestialBody.gravityForce * (float)delta;
+		// velocity += gravityForceLocal * (float)delta;
+		velocity += gravityDirection * GameManager.instance.currentPlayerCelestialBody.gravityForce * (float)delta;
+		// velocity.Y -= 10.0f * (float)delta;
+
+		// GD.Print(velocity.Y);
 
 		// Handle Jump.
 		if (Input.IsActionJustPressed("ui_accept") && IsOnFloor())
@@ -98,6 +114,10 @@ public partial class Player : CharacterBody3D
 		float inputDirZ = Input.GetActionStrength("forward") - Input.GetActionStrength("back");
 
 		Vector3 direction = (neck.Transform.Basis * new Vector3(inputDirX, 0, inputDirZ)).Normalized();
+		direction *= GlobalTransform.Basis;
+		
+		// Vector3 direction = (new Vector3(inputDirX, 0, inputDirZ)).Normalized();
+		
 		
 		if (direction != Vector3.Zero)
 		{
@@ -110,7 +130,12 @@ public partial class Player : CharacterBody3D
 			velocity.Z = Mathf.MoveToward(Velocity.Z, 0, Speed);
 		}
 
+		UpDirection = -gravityDirection;
+
 		Velocity = velocity;
+
+		GD.Print(Velocity);
 		MoveAndSlide();
+		// MoveAndCollide(Velocity);
 	}
 }
